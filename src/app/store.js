@@ -17,6 +17,3 @@ const initGameState = ([c, r]) => {
 }
 
 export const store = createStore(mapReducer, initGameState([50, 30]))
-store.subscribe(() => {
-  console.log(store.getState());
-});

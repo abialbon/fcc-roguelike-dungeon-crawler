@@ -13,6 +13,10 @@ store.dispatch({
   type: 'ADD_PLAYER'
 })
 
+setTimeout(() => {
+  mapActions.createMap([50, 30])
+}, 4000)
+
 ReactDOM.render(
   <Provider store={ store }>
     <App/>
