@@ -10,7 +10,7 @@ export default function mapReducer (state, action) {
     
     case 'ADD_PLAYER':
       let playerNotChosen = true;
-      let gameArray = state.gameArray;
+      let gameArray = [...state.gameArray];
       while (playerNotChosen) {
         let r = randomCoords([29, 49]);
         if (!state.mapArray[r[0]][r[1]]) {
@@ -26,24 +26,23 @@ export default function mapReducer (state, action) {
       }
 
     case 'ADD_ENEMIES':
+      let gameArrayEnemies = [...state.gameArray];
       for (let i = 0; i < 10; i++) {
 
         let enemyNotChosen = true;
-        let gameArray = state.gameArray;
         while (enemyNotChosen) {
           let r = randomCoords([29, 49]);
-          if ((!state.mapArray[r[0]][r[1]]) && (!gameArray[r[0]][r[1]])) {
-            gameArray[r[0]][r[1]] = { 
+          if ((!state.mapArray[r[0]][r[1]]) && (!gameArrayEnemies[r[0]][r[1]])) {
+            gameArrayEnemies[r[0]][r[1]] = { 
               type: 'enemy'
              }
             enemyNotChosen = false;
           }
         } 
-        
       }
       return {
         ...state,
-        gameArray: gameArray
+        gameArray: gameArrayEnemies
       }
     
     default:

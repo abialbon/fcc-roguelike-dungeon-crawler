@@ -12,10 +12,9 @@ mapActions.createMap([50, 30]);
 store.dispatch({
   type: 'ADD_PLAYER'
 })
-
-setTimeout(() => {
-  mapActions.createMap([50, 30])
-}, 4000)
+store.dispatch({
+  type: 'ADD_ENEMIES'
+})
 
 ReactDOM.render(
   <Provider store={ store }>

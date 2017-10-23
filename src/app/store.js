@@ -1,5 +1,6 @@
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import mapReducer from './reducers/mapReducer';
+import logger from 'redux-logger';
 
 // Initial game state has a mapArray and a GameArray
 const initGameState = ([c, r]) => {
@@ -16,7 +17,7 @@ const initGameState = ([c, r]) => {
   }
 }
 
-export const store = createStore(mapReducer, initGameState([50, 30]))
+export const store = createStore(mapReducer, initGameState([50, 30]), applyMiddleware(logger));
 store.subscribe(() => {
   console.log(store.getState());
 })
