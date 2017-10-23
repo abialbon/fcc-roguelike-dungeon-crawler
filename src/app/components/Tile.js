@@ -5,28 +5,19 @@ import { store } from '../store';
 class Tile extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {
-      isWall: this.props.mapArray[this.props.r][this.props.c],
-      entity: this.props.gameArray[this.props.r][this.props.c]
-    };
-  }
-
-  componentDidMount() {
-    store.subscribe(() => {
-      this.setState({
-        isWall: store.getState().mapArray[this.props.r][this.props.c],
-        entity: store.getState().gameArray[this.props.r][this.props.c]
-      });
-    })
   }
 
   render() {
     let style = 'tile';
-    if (this.state.isWall) {
+    let isWall = this.props.mapArray[this.props.r][this.props.c];
+    let entity = this.props.gameArray[this.props.r][this.props.c];
+    
+    if (this.props.mapArray[this.props.r][this.props.c]) {
       style = style + ' wall';
     }
-    if (this.state.entity) {
-      switch (this.state.entity.type) {
+
+    if (entity) {
+      switch (entity.type) {
         case 'player':
           style = style + ' player';
           break;
