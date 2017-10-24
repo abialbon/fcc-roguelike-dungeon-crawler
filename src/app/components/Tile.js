@@ -9,10 +9,12 @@ class Tile extends React.Component {
 
   render() {
     let style = 'tile';
-    let isWall = this.props.mapArray[this.props.r][this.props.c];
-    let entity = this.props.entitesArray[this.props.r][this.props.c];
+    let y = this.props.r;
+    let x = this.props.c;
+    let isWall = this.props.mapArray[y][x];
+    let entity = this.props.entitesArray[y][x];
     
-    if (this.props.mapArray[this.props.r][this.props.c]) {
+    if (this.props.mapArray[y][x]) {
       style = style + ' wall';
     }
 
@@ -31,6 +33,10 @@ class Tile extends React.Component {
       }
     }
 
+    if (!this.props.shadowArray[y][x]) {
+      style = style + ' dark';
+    }
+    
     return (
       <div className={ style }>
         
@@ -42,7 +48,8 @@ class Tile extends React.Component {
 const mapStateToProps = (state) => {
   return {
     mapArray: state.mapArray,
-    entitesArray: state.entitesArray
+    entitesArray: state.entitesArray,
+    shadowArray: state.shadowArray
   }
 }
 

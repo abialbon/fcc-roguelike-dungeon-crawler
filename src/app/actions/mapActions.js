@@ -1,6 +1,26 @@
 import { store } from '../store';
 import _ from 'lodash';
 
+function hideBoard(playerPosition, shadowArray) {
+  let index = (playerPosition[0] * 50) + playerPosition[1];
+  let tilesToCover = [
+    index -3, index - 2, index - 1, index, index + 1, index + 2, index + 3,
+    index - 50 - 2, index - 50 - 1, index - 50, index - 50 + 1, index - 50 + 2,
+    index + 50 - 2, index + 50 - 1, index + 50, index + 50 + 1, index + 50 + 2,
+    index - 100 - 1, index - 100, index - 100 + 1,
+    index + 100 - 1, index + 100, index + 100 + 1,
+    index - 150, 
+    index + 150
+  ];
+  const coordCal= (index) => [Math.floor(index / 50), index % 50]
+  tilesToCover.forEach((index) => {
+    if ((index > -1) && (index < 1499)) {
+      let [y2, x2] = coordCal(index);
+      shadowArray[y2][x2] = 1;
+    }
+  })
+  return shadowArray;
+}
 const randomCoords = ([c, r]) => [ _.random(c), _.random(r)]; 
 
 export const createMap = function([c, r]) {
@@ -8,6 +28,7 @@ export const createMap = function([c, r]) {
   let mapArray = [];
   let entitesArray = [];
   let shadowArray = [];
+  let dark = store.getState().dark;
 
   // Filling the array with empty arrays for rows [ h => row coords ]
   for (let i = 0; i < r; i++) {
@@ -66,13 +87,16 @@ export const createMap = function([c, r]) {
     } 
   }
 
+  // shadowArray
+  if (dark) { hideBoard(playerPosition, shadowArray); }
+
   store.dispatch({
     type: 'CREATE_MAP',
     payload: {
       mapArray,
       entitesArray,
       shadowArray,
-      playerPosition
+      playerPosition,
     }
   })
 
@@ -81,6 +105,11 @@ export const createMap = function([c, r]) {
 export const handleMove = function(e) {
   let mapArray = store.getState().mapArray;
   let entitesArray = store.getState().entitesArray;
+  let dark = store.getState().dark;
+  let shadowArray = [];
+  for (let i = 0; i < 30; i++) {
+    shadowArray.push([]);
+  }
   // Find coordinate of the next 
   let y1, x1;
   let [y, x] = store.getState().playerPosition;
@@ -109,11 +138,13 @@ export const handleMove = function(e) {
   }
   
   // Determine if wall
-  if (mapArray[y1][x1]) {
+  if ((y1 == 0 && x1 == 0) || mapArray[y1][x1]) {
     console.log('Wall')
     return;
   }
 
-  store.dispatch({ type: 'MOVE_PLAYER', payload: [y1, x1] })
+  if (dark) { hideBoard([y1, x1], shadowArray); }
+  
+  store.dispatch({ type: 'MOVE_PLAYER', payload: [y1, x1, shadowArray] })
   
 }

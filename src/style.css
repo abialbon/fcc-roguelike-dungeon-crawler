@@ -46,6 +46,12 @@ img {
   height: 150px;
   margin-bottom: 20px;
   border: 1px solid black;
+  padding: 8px;
+}
+
+.player-stats p {
+  padding: 0;
+  margin: 0;
 }
 
 .player-message {
@@ -83,4 +89,8 @@ img {
 
 .health {
   background-color: blueviolet;
+}
+
+.dark {
+  background-color: black;
 }

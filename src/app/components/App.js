@@ -8,10 +8,10 @@ export default class App extends React.Component {
       <div>
           <div className="header">
             <h2>Roguelike Dungeon crawler</h2>
-            <div className="container">
-              <PlayerBoard />
-              <GameBoard />
-            </div>
+          </div>
+          <div className="container">
+            <PlayerBoard />
+            <GameBoard />
           </div>
       </div>
     )
