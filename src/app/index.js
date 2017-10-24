@@ -4,11 +4,13 @@ import { Provider } from 'react-redux';
 import _ from 'lodash';
 
 import { store } from './store';
-import mapActions from './actions/mapActions';
+import { createMap, handleMove } from './actions/mapActions';
 
 import App from './components/App';
 
-mapActions([50, 30]);
+createMap([50, 30]);
+
+document.addEventListener('keydown', handleMove);
 
 ReactDOM.render(
   <Provider store={ store }>
