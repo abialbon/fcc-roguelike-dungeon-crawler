@@ -32,7 +32,7 @@ class GameBoard extends React.Component {
 const mapStateToProps = (state) => {
   return {
     mapArray: state.mapArray,
-    gameArray: state.gameArray
+    entitesArray: state.entitesArray
   }
 }
 

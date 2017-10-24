@@ -10,7 +10,7 @@ class Tile extends React.Component {
   render() {
     let style = 'tile';
     let isWall = this.props.mapArray[this.props.r][this.props.c];
-    let entity = this.props.gameArray[this.props.r][this.props.c];
+    let entity = this.props.entitesArray[this.props.r][this.props.c];
     
     if (this.props.mapArray[this.props.r][this.props.c]) {
       style = style + ' wall';
@@ -25,6 +25,9 @@ class Tile extends React.Component {
         case 'enemy':
           style = style + ' enemy';
           break;
+
+        case 'health':
+          style = style + ' health';
       }
     }
 
@@ -39,7 +42,7 @@ class Tile extends React.Component {
 const mapStateToProps = (state) => {
   return {
     mapArray: state.mapArray,
-    gameArray: state.gameArray
+    entitesArray: state.entitesArray
   }
 }
 

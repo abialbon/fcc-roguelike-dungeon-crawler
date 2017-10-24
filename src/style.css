@@ -80,3 +80,7 @@ img {
 .enemy {
   background-color: tomato;
 }
+
+.health {
+  background-color: blueviolet;
+}

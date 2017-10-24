@@ -8,13 +8,7 @@ import mapActions from './actions/mapActions';
 
 import App from './components/App';
 
-mapActions.createMap([50, 30]);
-store.dispatch({
-  type: 'ADD_PLAYER'
-})
-store.dispatch({
-  type: 'ADD_ENEMIES'
-})
+mapActions([50, 30]);
 
 ReactDOM.render(
   <Provider store={ store }>
