@@ -92,6 +92,20 @@ export const createMap = function([c, r]) {
     } 
   }
 
+  if (level === 3) {
+    let bossNotChosen = true;
+    while (bossNotChosen) {
+      let [y, x] = randomCoords([29, 49]);
+      if ((!mapArray[y][x]) && (!entitesArray[y][x])) {
+        entitesArray[y][x] = { 
+          type: 'boss',
+          damage: _.random(150, 250),
+          }
+        bossNotChosen = false;
+      }
+    } 
+  } 
+
   // shadowArray
   hideBoard(playerPosition, shadowArray);
 
