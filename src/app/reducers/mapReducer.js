@@ -27,6 +27,57 @@ export default function mapReducer (state = {}, action) {
         dark: toggle
       }
 
+    case 'ADD_HEALTH': 
+      let health = state.health;
+      return {
+        ...state,
+        health: health + action.payload.health,
+        weapon: action.payload.weapon
+      }
+
+    case 'DO_DAMAGE':
+      health = state.health - action.payload.damage;
+      let entites = [...state.entitesArray];
+      [y1, x1] = action.payload.point;
+      let damage;
+      switch (state.weapon) {
+        case 'stick':
+          damage = 10;
+          break; 
+
+        case 'whip':
+          damage = 13;
+          break;
+
+        case 'spear':
+          damage = 17;
+          break;
+
+        case 'gun':
+          damage = 20;
+          break;
+
+        case 'laser-gun':
+          damage = 25;
+          break;
+      }
+
+      entites[y1][x1] = {
+        type: 'enemy',
+        damage: action.payload.damage - damage
+      }
+      return {
+        ...state,
+        health: health,
+        entitesArray: entites
+      }
+
+      case 'ADD_XP':
+        return {
+          ...state,
+          xp: state.xp + 10
+        }
+
     default:
       return state;
   }

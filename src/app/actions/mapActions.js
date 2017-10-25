@@ -29,6 +29,7 @@ export const createMap = function([c, r]) {
   let entitesArray = [];
   let shadowArray = [];
   let dark = store.getState().dark;
+  let weapons = ['whip', 'spear', 'gun', 'laser-gun'];
 
   // Filling the array with empty arrays for rows [ h => row coords ]
   for (let i = 0; i < r; i++) {
@@ -65,7 +66,8 @@ export const createMap = function([c, r]) {
       let [y, x] = randomCoords([29, 49]);
       if ((!mapArray[y][x]) && (!entitesArray[y][x])) {
         entitesArray[y][x] = { 
-          type: 'enemy'
+          type: 'enemy',
+          damage: _.random(15, 24)
           }
         enemyNotChosen = false;
       }
@@ -80,7 +82,9 @@ export const createMap = function([c, r]) {
       let [y, x] = randomCoords([29, 49]);
       if ((!mapArray[y][x]) && (!entitesArray[y][x])) {
         entitesArray[y][x] = { 
-          type: 'health'
+          type: 'health',
+          health: _.random(15, 25),
+          weapon: weapons[_.random(0, 4)]
           }
           healthNotChosen = false;
         }
@@ -88,7 +92,7 @@ export const createMap = function([c, r]) {
   }
 
   // shadowArray
-  if (dark) { hideBoard(playerPosition, shadowArray); }
+  hideBoard(playerPosition, shadowArray);
 
   store.dispatch({
     type: 'CREATE_MAP',
@@ -106,6 +110,7 @@ export const handleMove = function(e) {
   let mapArray = store.getState().mapArray;
   let entitesArray = store.getState().entitesArray;
   let dark = store.getState().dark;
+  let xp = store.getState().xp;
   let shadowArray = [];
   for (let i = 0; i < 30; i++) {
     shadowArray.push([]);
@@ -141,6 +146,32 @@ export const handleMove = function(e) {
   if ((y1 == 0 && x1 == 0) || mapArray[y1][x1]) {
     console.log('Wall')
     return;
+  }
+
+  let nextEntity = entitesArray[y1][x1];
+  if (nextEntity && nextEntity.type == 'health') {
+    store.dispatch({
+      type: 'ADD_HEALTH',
+      payload: nextEntity
+    })
+  } else if (nextEntity && nextEntity.type == 'enemy') {
+    //Enemy logic here
+    if (nextEntity.damage > 0) {
+      store.dispatch({
+        type: 'DO_DAMAGE',
+        payload: {
+          point: [y1, x1],
+          damage: nextEntity.damage
+        }
+      })
+      return;
+    } else {
+      store.dispatch({ type: 'ADD_XP' })
+    }
+    if (xp > 10) {
+      createMap([50, 30]);
+      return;
+    }
   }
 
   hideBoard([y1, x1], shadowArray);
