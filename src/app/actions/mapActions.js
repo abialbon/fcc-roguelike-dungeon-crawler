@@ -122,6 +122,13 @@ export const createMap = function([c, r]) {
 }
 
 export const handleMove = function(e) {
+  let messages = [
+    'Hey, get away from me!',
+    'That hurt, man!',
+    'Can we just be friends? Please!',
+    'Prepare to die',
+    'You can\'t escape my blood lust'
+  ]
   let mapArray = store.getState().mapArray;
   let entitesArray = store.getState().entitesArray;
   let dark = store.getState().dark;
@@ -171,8 +178,15 @@ export const handleMove = function(e) {
       payload: nextEntity
     })
   } else if (nextEntity && nextEntity.type == 'enemy') {
-    //Enemy logic here
+    
     if (nextEntity.damage > 0) {
+
+      if ((health - nextEntity.damage) < 1) {
+        alert('Sorry, you are weak to play. Game over.')
+        document.removeEventListener('keydown', handleMove);
+        return;
+      }
+
       store.dispatch({
         type: 'DO_DAMAGE',
         payload: {
@@ -180,8 +194,16 @@ export const handleMove = function(e) {
           damage: nextEntity.damage
         }
       })
+      store.dispatch({
+        type: 'ADD_MESSAGE',
+        payload: messages[_.random(4)]
+      })
       return;
     } else {
+      store.dispatch({
+        type: 'ADD_MESSAGE',
+        payload: ''
+      })
       store.dispatch({ type: 'ADD_XP' });
       hideBoard([y1, x1], shadowArray);
       store.dispatch({ type: 'MOVE_PLAYER', payload: [y1, x1, shadowArray] });

@@ -86,6 +86,12 @@ export default function mapReducer (state = {}, action) {
         dungeon: state.dungeon + 1
       }
 
+    case 'ADD_MESSAGE':
+      return {
+        ...state,
+        message: action.payload
+      }
+
     default:
       return state;
   }
