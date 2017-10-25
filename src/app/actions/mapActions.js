@@ -128,10 +128,11 @@ export const handleMove = function(e) {
   let xp = store.getState().xp;
   let shadowArray = [];
   let level = store.getState().level;
+  let health = store.getState().health;
   for (let i = 0; i < 30; i++) {
     shadowArray.push([]);
   }
-  // Find coordinate of the next 
+  // Find coordinate of the next tile
   let y1, x1;
   let [y, x] = store.getState().playerPosition;
   let index = ((y) * 50) + x;
@@ -160,7 +161,6 @@ export const handleMove = function(e) {
   
   // Determine if wall
   if ((y1 == 0 && x1 == 0) || mapArray[y1][x1]) {
-    console.log('Wall')
     return;
   }
 
@@ -195,13 +195,21 @@ export const handleMove = function(e) {
       createMap([50, 30]);
     }
 
-    if ((level ==1) && (xp > 10)) {
+    if ((level ==1) && (xp > 40)) {
       levelup()  
       return;
-    } else if ((level == 2) && (xp > 30)) {
+    } else if ((level == 2) && (xp > 80)) {
       levelup();
       return;
     }
+    return;
+  } else if (nextEntity && nextEntity.type == 'boss') {
+    if (health > nextEntity.damage) {
+      alert('You won')
+    } else {
+      alert('You lost')
+    }
+    document.removeEventListener('keydown', handleMove);
     return;
   }
 

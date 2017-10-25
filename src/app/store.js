@@ -7,7 +7,8 @@ const initGameState = {
   weapon: 'stick',
   xp : 0,
   dungeon: 1,
-  dark: true
+  dark: true,
+  message: "You'll see messages from your enemies here!"
 }
 
 export const store = createStore(mapReducer, initGameState);

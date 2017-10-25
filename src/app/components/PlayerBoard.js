@@ -21,7 +21,8 @@ class PlayerBoard extends React.Component {
         </div>
         <div className="player-message">
           <div className="message-title">
-            Your enemy says:
+            Your enemy says: <br />
+            { this.props.message }
           </div>
         </div>
       </div>
@@ -35,7 +36,8 @@ const mapStateToProps = (state) => {
     xp: state.xp,
     level: state.level,
     weapon: state.weapon,
-    dungeon: state.dungeon
+    dungeon: state.dungeon,
+    message: state.message
   }
 }
 
