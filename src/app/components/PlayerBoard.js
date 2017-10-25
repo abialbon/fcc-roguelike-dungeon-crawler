@@ -17,6 +17,7 @@ class PlayerBoard extends React.Component {
           <p>XP: { this.props.xp }</p>
           <p>Level: { this.props.level }</p>
           <p>Dungeon: { this.props.dungeon }</p>
+          <button onClick={ this.props.toggleDark }>Toggle Darkness</button>
         </div>
         <div className="player-message">
           <div className="message-title">
@@ -38,4 +39,15 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(PlayerBoard);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    toggleDark: () => {
+      console.log('Toggled!')
+      dispatch({
+        type: 'TOGGLE_DARK'
+      })
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(PlayerBoard);

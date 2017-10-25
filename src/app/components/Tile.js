@@ -33,7 +33,7 @@ class Tile extends React.Component {
       }
     }
 
-    if (!this.props.shadowArray[y][x]) {
+    if (this.props.dark && !this.props.shadowArray[y][x]) {
       style = style + ' dark';
     }
     
@@ -49,7 +49,8 @@ const mapStateToProps = (state) => {
   return {
     mapArray: state.mapArray,
     entitesArray: state.entitesArray,
-    shadowArray: state.shadowArray
+    shadowArray: state.shadowArray,
+    dark: state.dark
   }
 }
 

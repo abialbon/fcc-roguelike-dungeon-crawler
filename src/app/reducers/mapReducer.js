@@ -20,6 +20,13 @@ export default function mapReducer (state = {}, action) {
         shadowArray: shadowArray
       }
 
+    case 'TOGGLE_DARK':
+      let toggle = !state.dark;
+      return {
+        ...state,
+        dark: toggle
+      }
+
     default:
       return state;
   }

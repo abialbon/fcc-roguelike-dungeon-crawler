@@ -143,8 +143,7 @@ export const handleMove = function(e) {
     return;
   }
 
-  if (dark) { hideBoard([y1, x1], shadowArray); }
-  
+  hideBoard([y1, x1], shadowArray);
   store.dispatch({ type: 'MOVE_PLAYER', payload: [y1, x1, shadowArray] })
   
 }
