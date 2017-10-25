@@ -29,6 +29,7 @@ export const createMap = function([c, r]) {
   let entitesArray = [];
   let shadowArray = [];
   let dark = store.getState().dark;
+  let level = store.getState().level;
   let weapons = ['whip', 'spear', 'gun', 'laser-gun'];
 
   // Filling the array with empty arrays for rows [ h => row coords ]
@@ -84,7 +85,7 @@ export const createMap = function([c, r]) {
         entitesArray[y][x] = { 
           type: 'health',
           health: _.random(15, 25),
-          weapon: weapons[_.random(0, 4)]
+          weapon: weapons[_.random(0, 3)]
           }
           healthNotChosen = false;
         }
@@ -112,6 +113,7 @@ export const handleMove = function(e) {
   let dark = store.getState().dark;
   let xp = store.getState().xp;
   let shadowArray = [];
+  let level = store.getState().level;
   for (let i = 0; i < 30; i++) {
     shadowArray.push([]);
   }
@@ -166,12 +168,27 @@ export const handleMove = function(e) {
       })
       return;
     } else {
-      store.dispatch({ type: 'ADD_XP' })
+      store.dispatch({ type: 'ADD_XP' });
+      hideBoard([y1, x1], shadowArray);
+      store.dispatch({ type: 'MOVE_PLAYER', payload: [y1, x1, shadowArray] });
     }
-    if (xp > 10) {
+
+    // Leveling up
+    function levelup() {
+      store.dispatch({
+        type: 'LEVEL_UP'
+      });
       createMap([50, 30]);
+    }
+
+    if ((level ==1) && (xp > 10)) {
+      levelup()  
+      return;
+    } else if ((level == 2) && (xp > 30)) {
+      levelup();
       return;
     }
+    return;
   }
 
   hideBoard([y1, x1], shadowArray);

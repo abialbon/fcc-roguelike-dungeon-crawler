@@ -64,7 +64,7 @@ export default function mapReducer (state = {}, action) {
       }
 
       entites[y1][x1] = {
-        type: entity == 'enemy' ? 'enemy' : 'boss',
+        type: entity = 'enemy',
         damage: action.payload.damage - damage
       }
       return {
