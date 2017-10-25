@@ -91,6 +91,24 @@ img {
   background-color: blueviolet;
 }
 
+.boss {
+  background-color: red;
+  animation-name: blink;
+  animation-duration: 0.7s;
+  animation-iteration-count: infinite;
+}
+
 .dark {
   background-color: black;
+  animation: none;
+}
+
+@keyframes blink {
+  0% {
+    opacity: 0
+  }
+
+  100% {
+    opacity: 1
+  }
 }

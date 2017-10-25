@@ -36,6 +36,7 @@ export default function mapReducer (state = {}, action) {
       }
 
     case 'DO_DAMAGE':
+      let entity = action.payload.type;
       health = state.health - action.payload.damage;
       let entites = [...state.entitesArray];
       [y1, x1] = action.payload.point;
@@ -63,7 +64,7 @@ export default function mapReducer (state = {}, action) {
       }
 
       entites[y1][x1] = {
-        type: 'enemy',
+        type: entity == 'enemy' ? 'enemy' : 'boss',
         damage: action.payload.damage - damage
       }
       return {
@@ -72,11 +73,18 @@ export default function mapReducer (state = {}, action) {
         entitesArray: entites
       }
 
-      case 'ADD_XP':
-        return {
-          ...state,
-          xp: state.xp + 10
-        }
+    case 'ADD_XP':
+      return {
+        ...state,
+        xp: state.xp + 10
+      }
+
+    case 'LEVEL_UP':
+      return {
+        ...state,
+        level: state.level + 1,
+        dungeon: state.dungeon + 1
+      }
 
     default:
       return state;

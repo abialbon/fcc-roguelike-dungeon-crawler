@@ -30,6 +30,10 @@ class Tile extends React.Component {
 
         case 'health':
           style = style + ' health';
+          break;
+
+        case 'boss':
+        style = style + ' boss';
       }
     }
 
